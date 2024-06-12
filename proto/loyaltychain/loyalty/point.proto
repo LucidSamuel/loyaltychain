@@ -1,0 +1,12 @@
+syntax = "proto3";
+package loyaltychain.loyalty;
+
+option go_package = "loyaltychain/x/loyalty/types";
+
+message Point {
+  string index = 1; 
+  string owner = 2; 
+  int32 balance = 3; 
+  string creator = 4;
+}
+

@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package loyaltychain.loyalty;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "loyaltychain/loyalty/params.proto";
+import "loyaltychain/loyalty/point.proto";
+
+option go_package = "loyaltychain/x/loyalty/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  
+  // Parameters queries the parameters of the module.
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/loyaltychain/loyalty/params";
+  
+  }
+  
+  // Queries a list of Point items.
+  rpc Point    (QueryGetPointRequest) returns (QueryGetPointResponse) {
+    option (google.api.http).get = "/loyaltychain/loyalty/point/{index}";
+  
+  }
+  rpc PointAll (QueryAllPointRequest) returns (QueryAllPointResponse) {
+    option (google.api.http).get = "/loyaltychain/loyalty/point";
+  
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+message QueryGetPointRequest {
+  string index = 1;
+}
+
+message QueryGetPointResponse {
+  Point point = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllPointRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllPointResponse {
+  repeated Point                                  point      = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+

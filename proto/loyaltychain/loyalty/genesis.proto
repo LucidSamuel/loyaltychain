@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package loyaltychain.loyalty;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "loyaltychain/loyalty/params.proto";
+import "loyaltychain/loyalty/point.proto";
+
+option go_package = "loyaltychain/x/loyalty/types";
+
+// GenesisState defines the loyalty module's genesis state.
+message GenesisState {
+  
+  // params defines all the parameters of the module.
+           Params params    = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  repeated Point  pointList = 2 [(gogoproto.nullable) = false] ;
+}
+
